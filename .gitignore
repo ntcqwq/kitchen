@@ -164,4 +164,5 @@ main.cpp:tests
 main.py
 main.cpp
 .DS_Store
-.json
+my.json
+data.json
