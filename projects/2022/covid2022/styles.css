@@ -1,0 +1,16 @@
+body {
+  background-image: url("imgs/minecraft.jpeg");
+  background-repeat: no-repeat;
+  background-size: auto;
+  margin: 34px;
+  font-family: cursive;
+}
+
+.mypara {
+  font-family: serif;
+  font-size: 30px;
+}
+
+.right {
+ float:right;
+}

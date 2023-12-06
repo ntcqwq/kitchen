@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="crossorigin=""/>
+    <script src="data.json"></script>
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js"integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ=="crossorigin=""></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo"><i class="material-icons">apps</i></a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+          <li><a href="about.html">© SSnipro</a></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="row">
+      <div class="col s12 m6">
+        <div class="card sc">
+          <div class="card-content">
+            <span class="card-title">About COVID-19</span>
+              <p>
+                <span style="font-size:8.0pt">
+                  Coronavirus disease (COVID-19) is an infectious disease caused by the SARS-CoV-2 virus.<br><br>Most people infected with the virus will experience mild to moderate respiratory illness and recover without requiring special treatment. However, some will become seriously ill and require medical attention. Older people and those with underlying medical conditions like cardiovascular disease, diabetes, chronic respiratory disease, or cancer are more likely to develop serious illness. Anyone can get sick with COVID-19 and become seriously ill or die at any age.<br><br>The best way to prevent and slow down transmission is to be well informed about the disease and how the virus spreads. Protect yourself and others from infection by staying at least 1 metre apart from others, wearing a properly fitted mask, and washing your hands or using an alcohol-based rub frequently. Get vaccinated when it’s your turn and follow local guidance.<br><br>The virus can spread from an infected person’s mouth or nose in small liquid particles when they cough, sneeze, speak, sing or breathe. These particles range from larger respiratory droplets to smaller aerosols. It is important to practice respiratory etiquette, for example by coughing into a flexed elbow, and to stay home and self-isolate until you recover if you feel unwell.<br><br><b><a href="https://www.who.int/health-topics/coronavirus#tab=tab_1">Source</a></b>
+                </span>
+              </p>
+          </div>
+        </div>
+      </div>
+      <div class="col s12 m6">
+        <div class="card sc">
+          <div class="card-content">
+            <span class="card-title">Map</span>
+             <div id="map"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Graph</span>
+            <canvas id="doughnut-chart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12">
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title">Data<br><span style="font-size:10.0pt">Deaths > Cases > Least Recovered</span></span>
+            <p class='data' id='mydata' style='font-size:9px'></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <footer class="page-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">Web consulting </h5>
+                <p class="grey-text text-lighten-4">t'was fun!</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Sources</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="https://github.com/SSnipro/covid2022">Github</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://materializecss.com">Materialize</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://leafletjs.com">Leaflet</a></li>
+                  <li><a class="grey-text text-lighten-3" href="https://www.chartjs.org/docs/latest/">Chartjs</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © 2022 SSnipro Inc. All rights reserved.
+            <a class="grey-text text-lighten-4 right" href="#!"></a>
+            </div>
+          </div>
+        </footer>
+  </body>
+  <script type="text/javascript">
+    getData();
+    mapping();
+    donut();
+    function getData() {
+      var allData = "<ul class='collection'>"
+       for (var country = 0; country < coviddata.data.sort(function(a,b){return a.recovered - b.recovered}).sort(function(a,b){return b.confirmed - a.confirmed}).sort(function(a,b){return b.dead - a.dead}).length; country++) {
+         allData += `<li class="collection-item avatar"><img id="currentPhoto" src="https://www.crwflags.com/fotw/images/${coviddata.data[country].country_code.charAt(0)}/${coviddata.data[country].country_code}.gif" alt='Image not found' onerror="this.onerror=null;this.src='errorflags/${coviddata.data[country].location}.png';" class='circle';/><span class="title"><b><span style="color:teal">${country+1}. ${coviddata.data[country].location}</span></b></span><p>${coviddata.data[country].dead} Deaths<br>${coviddata.data[country].confirmed} Cases <br>${coviddata.data[country].recovered} Recovered</p></li>`
+       }
+       allData += "</ul>";
+       document.getElementById('mydata').innerHTML = allData;
+    }
+    function mapping() {
+      var map = L.map('map').setView([51, 0], 1);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '© OpenStreetMap'
+      }).addTo(map);
+      algo(map);
+    }
+    function algo(map) {
+      for (var c = 0; c < coviddata.data.length; c++) {
+        la = coviddata.data[c].latitude;
+        lo = coviddata.data[c].longitude;
+        r = (coviddata.data[c].dead)*2.5;
+        pop = `<span style="color:teal"><b>${coviddata.data[c].location}</b></span><br>${coviddata.data[c].dead} Deaths<br>${coviddata.data[c].confirmed} Cases<br>`
+        var circle = L.circle([la, lo], {
+            color: 'red',
+            fillColor: '#f03',
+            fillOpacity: 0.5,
+            radius: r
+        }).addTo(map).bindPopup(pop);
+      }
+    }
+    function data() {
+      var locations = []
+      var nconfirmed = []
+      var deaths = []
+      var nrecovered = []
+      var colors = []
+      for (var i = 0; i < coviddata.data.sort(function(a,b){return a.recovered - b.recovered}).sort(function(a,b){return b.confirmed - a.confirmed}).sort(function(a,b){return b.dead - a.dead}).length; i++) {
+        locations.push(coviddata.data[i].location)
+        nconfirmed.push(coviddata.data[i].confirmed)
+        deaths.push(coviddata.data[i].dead)
+        nrecovered.push(coviddata.data[i].recovered)
+        colors.push(`#${Math.floor(Math.random()*16777215).toString(16)}`)
+      }
+      return [locations,nconfirmed,deaths,nrecovered,colors]
+    }
+    function donut() {
+      new Chart(document.getElementById("doughnut-chart"), {
+        type: 'doughnut',
+        data: {
+          labels: data()[0],
+          datasets: [
+            {
+              label: "Number of deaths",
+              backgroundColor: data()[4],
+              data: data()[2]
+            }
+          ]
+        },
+        options: {
+          title: {
+            display: true,
+            text: 'Deaths by COVID by Country (April 2021)'
+          }
+        }
+      });
+    }
+  </script>
+</html>
