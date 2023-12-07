@@ -1,5 +1,6 @@
-# Swift Playgrounds Practice
+# Swift Playgrounds (Archived)
 
 Swift was the first coding language I learned, and this is where my coding Journey started in 2019!
 
-Thank you @hdcola for everything you've taught me, you're a great teacher! :D
+Thank you ![Static Badge](https://img.shields.io/badge/GitHub-hdcola-white?logo=Github&link=https%3A%2F%2Fdmoj.ca%2Fuser%2Fntc)
+ for everything you've taught me, you're a great teacher! :D
