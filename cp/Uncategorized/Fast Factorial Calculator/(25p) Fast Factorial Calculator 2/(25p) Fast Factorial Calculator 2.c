@@ -1,4 +1,4 @@
-// Solution by Richard_Chen
+// Solution by Richard_Chen, thanks for teaching me!
 // 100/100 C (GCC)
 
 #include <stdlib.h>
