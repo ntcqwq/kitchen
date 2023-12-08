@@ -1,0 +1,1 @@
+weight, height = float(input()), float(input()); print("Overweight" if weight/height**2 > 25 else "Underweight" if weight/height**2 < 18.5 else "Normal weight")
