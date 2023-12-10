@@ -1,6 +1,6 @@
 import plotly.express as px, pandas as pd, numpy as np, random, csv
 def read_file(file_path: str, remove_first_line = True) -> list: # this function reads a csv file when given the file path
-    with open(f"/Users/nchen26/Code/Journey/ntc/Sublime/{file_path}.csv", newline = '') as cd:
+    with open(f"/Users/nchen26/Code/kitchen/ucc/Y10Coding/DesigningData/Data/{file_path}.csv", newline = '') as cd:
         reader = csv.reader(cd)
         return list(reader)[1:] if remove_first_line else list(reader)
 covid_data = read_file("coviddata")
