@@ -5,9 +5,9 @@ def read_file(file_path: str, remove_first_line = True) -> list: # this function
         return list(reader)[1:] if remove_first_line else list(reader)
 university_data = read_file("universitystudents")
 data = [[] for _ in range(101)]
-for p in university_data:
+for p in university_data: # loop through the csv
     total = 0
-    for i in list(map(int, p[22:49])):
+    for i in list(map(int, p[22:49])): # taking values from p[22:49]
         if i != 99:
             total += i
     internet_usg = int(p[1])
@@ -15,8 +15,7 @@ for p in university_data:
 avgs = {}
 for usg in range(101):
     if len(data[usg]) != 0:
-        avgs[usg] = sum(data[usg]) / len(data[usg])
-x_values = list(range(101))
+        avgs[usg] = sum(data[usg]) / len(data[usg]) # calculating average if its not 0
 fig = plt.figure(figsize=(6,6)) # Creating figure
 ax = fig.add_subplot(111)
 ax.set_facecolor('xkcd:black') # make the graph dark mode
@@ -33,4 +32,3 @@ plt.xlabel('Internet Usage (% of day used online)', color=textColor, fontweight=
 plt.ylabel('Mental Health', color=textColor, fontweight="bold", fontname="Silom")
 plt.grid(False)
 plt.show()
-
