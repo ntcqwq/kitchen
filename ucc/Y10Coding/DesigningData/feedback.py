@@ -16,13 +16,21 @@ for p in feedback_data:
     data[0][2] += int(p[8])/N
     data[1][2] += int(p[9])/N
     data[2][2] += int(p[10])/N
-
-print(data)
+def addlabels(x,y):
+    for i in range(len(x)):
+        plt.text(i, y[i], y[i], ha = 'center',
+                 Bbox = dict(facecolor = 'red', alpha =.8))
 width = 0.2
+def addlabels(x, y):
+    for i in range(len(x)):
+        plt.text(x[i], y[i], f'{y[i]:.2f}', ha='center', va='bottom', color='black')
 x = np.arange(3) 
 plt.bar(x-0.2, data[0], width, color='blue') 
 plt.bar(x, data[1], width, color='orange') 
 plt.bar(x+0.2, data[2], width, color='pink') 
+addlabels(x - 0.2, data[0])
+addlabels(x, data[1])
+addlabels(x + 0.2, data[2])
 plt.xticks(x, ['2D Scatter', 'Radar', 'Line']) 
 plt.xlabel("Chart") 
 plt.ylabel("Score") 
