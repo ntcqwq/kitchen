@@ -1,3 +1,4 @@
+# CODE FOR D2, NOT FOR C
 import matplotlib as mpl, numpy as np, csv, matplotlib.pyplot as plt, pandas as pd 
 def read_file(file_path: str, remove_first_line = True) -> list: # this function reads a csv file when given the file path
     with open(f"/Users/nchen26/Code/kitchen/ucc/Y10Coding/DesigningData/Data/{file_path}.csv", newline = '') as cd:
