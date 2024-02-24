@@ -12,8 +12,6 @@ def dijkstra(a, b):
         d, u = hq.heappop(q)
         if u == b:
             break
-        if d != dis[u]:
-            continue
         for l, v in adjl[u]:
             if dis[u] + l < dis[v]:
                 dis[v] = dis[u] + l
